@@ -1,21 +1,15 @@
 // create web server
-var express = require('express');
-var router = express.Router();
-var bodyParser = require('body-parser');
-var Comment = require('../models/comment');
-var Post = require('../models/post');
-
-router.use(bodyParser.urlencoded({ extended: true }));
-
-// CREATES A NEW COMMENT
-router.post('/', function (req, res) {
-    Comment.create({
-            comment: req.body.comment,
-            post: req.body.post,
-            user: req.body.user
-        },
-        function (err, comment) {
-            if (err) return res.status(500).send("There was a problem adding the comment.");
-            res.status(200).send(comment);
-        });
-}); // <-- added missing closing parenthesis
+// 1. include http module
+var http = require('http');
+// 2. create server
+var server = http.createServer(function(req, res) {
+    // 3. set header
+    res.setHeader('Content-Type', 'text/html');
+    // 4. set response
+    res.write('<html><body><h1>Comments</h1></body></html>');
+    // 5. end response
+    res.end();
+});
+// 6. listen on port
+server.listen(3000);
+console.log('Server running at http://localhost:3000');
